@@ -23,19 +23,22 @@ async function drag(dragTimes, start, end, sleepTimeAfterDrag) {
 }
 
 module.exports = {
-  setRandomMouseDelay(start = 50, end = 150) {
+  setRandomMouseDelay(start = 150, end = 250) {
     const randomMouseDelay = Math.floor(Math.random() * (end - start)) + start;
     robot.setMouseDelay(randomMouseDelay);
   },
 
-  click(location, times = 1, xOffset = 20, yOsset) {
+  click(location, times = 1, xOffset = 20, yOffset) {
     for (let i = 0; i < times; i++) {
+      const randomMouseDelay = Math.floor(Math.random() * (200 - 100)) + 100;
+      robot.setMouseDelay(randomMouseDelay);
+
       const randomX =
         location.x + Math.floor(Math.random() * xOffset) - xOffset / 2;
       const randomY =
         location.y +
-        Math.floor(Math.random() * (yOsset || xOffset)) -
-        (yOsset || xOffset) / 2;
+        Math.floor(Math.random() * (yOffset || xOffset)) -
+        (yOffset || xOffset) / 2;
 
       robot.moveMouse(randomX, randomY);
       robot.mouseClick();

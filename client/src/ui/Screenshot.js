@@ -11,7 +11,6 @@ export default class Screenshot extends React.Component {
 
     this.refreshScreenshot = this.refreshScreenshot.bind(this);
     this.sendClickCommand = this.sendClickCommand.bind(this);
-    this.onKeyPressed = this.onKeyPressed.bind(this);
   }
 
   componentDidMount() {
@@ -23,21 +22,18 @@ export default class Screenshot extends React.Component {
   }
 
   sendClickCommand(event) {
-    console.log("event.ctrlKey", event.ctrlKey);
-    console.log("event.altKey", event.altKey);
+    console.log("event", event.nativeEvent);
 
     const x = event.pageX - this.imageElement.x;
     const y = event.pageY - this.imageElement.y;
 
     const command = event.ctrlKey
       ? "SCROLL_DOWN"
-      : event.altKey ? "SCROLL_UP" : "CLICK_COORDINATES";
+      : event.altKey
+        ? "SCROLL_UP"
+        : event.shiftKey ? "CLICK_COORDINATES_MULTIPLE" : "CLICK_COORDINATES";
 
     api.emit(command, { x, y });
-  }
-
-  onKeyPressed(e) {
-    console.log(e.ctrlKey);
   }
 
   render() {

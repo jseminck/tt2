@@ -14,8 +14,6 @@ const { TOP_LEFT_X, TOP_LEFT_Y, FIRST_MENU_BUTTON } = require("../constants");
 // const state = require("./state");
 
 module.exports = async function handleCommands(commands) {
-  console.log("commands", commands);
-
   // const uploadScreenshotIndex = commands.findIndex(
   //   c => c.command === "UPLOAD_SCREENSHOT"
   // );
@@ -29,7 +27,7 @@ module.exports = async function handleCommands(commands) {
   //   screenshot.grab(true, () => {});
   // }
 
-  if (commands.length) {
+  while (commands.length) {
     const command = commands.shift();
     // await analyzeScreen();
     await handleCommand(command);
@@ -43,6 +41,10 @@ module.exports = async function handleCommands(commands) {
 const COMMANDS_MAPPING = {
   CLICK_COORDINATES: async ({ x, y }) =>
     mouseUtils.click({ x: TOP_LEFT_X + x, y: TOP_LEFT_Y + y }),
+  CLICK_COORDINATES_MULTIPLE: async ({ x, y }) => {
+    const numberOfClicks = Math.floor(Math.random() * (15 - 5)) + 5;
+    mouseUtils.click({ x: TOP_LEFT_X + x, y: TOP_LEFT_Y + y }, numberOfClicks);
+  },
   SCROLL_DOWN: async ({ x, y }) => {
     const START = { x: TOP_LEFT_X + x, y: TOP_LEFT_Y + y };
     const END = { x: TOP_LEFT_X + x, y: TOP_LEFT_Y + y - 250 };
@@ -124,13 +126,9 @@ const COMMANDS_MAPPING = {
 
 async function handleCommand(command) {
   const { message } = command;
-  console.log(message, COMMANDS_MAPPING[message]);
-
   if (COMMANDS_MAPPING[message]) {
     await COMMANDS_MAPPING[message](command);
   }
-
-  await asyncSleep(1000);
 }
 
 async function prestige() {
