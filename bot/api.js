@@ -1,7 +1,7 @@
 const fetch = require("node-fetch");
 const moment = require("moment");
 
-const io = require("socket.io-client")("http://localhost:3000");
+const io = require("socket.io-client")("http://188.226.164.164:3000/");
 const SERVER = "http://188.226.164.164:12345/tt2/";
 
 io.on("connect", () => {});
