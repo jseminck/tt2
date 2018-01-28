@@ -30,9 +30,6 @@ module.exports = {
 
   click(location, times = 1, xOffset = 20, yOffset) {
     for (let i = 0; i < times; i++) {
-      const randomMouseDelay = Math.floor(Math.random() * (200 - 100)) + 100;
-      robot.setMouseDelay(randomMouseDelay);
-
       const randomX =
         location.x + Math.floor(Math.random() * xOffset) - xOffset / 2;
       const randomY =

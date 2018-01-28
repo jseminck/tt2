@@ -27,7 +27,7 @@ module.exports = async function handleCommands(commands) {
   //   screenshot.grab(true, () => {});
   // }
 
-  while (commands.length) {
+  if (commands.length) {
     const command = commands.shift();
     // await analyzeScreen();
     await handleCommand(command);
@@ -42,7 +42,9 @@ const COMMANDS_MAPPING = {
   CLICK_COORDINATES: async ({ x, y }) =>
     mouseUtils.click({ x: TOP_LEFT_X + x, y: TOP_LEFT_Y + y }),
   CLICK_COORDINATES_MULTIPLE: async ({ x, y }) => {
-    const numberOfClicks = Math.floor(Math.random() * (15 - 5)) + 5;
+    mouseUtils.setRandomMouseDelay(30, 60);
+
+    const numberOfClicks = Math.floor(Math.random() * (20 - 10)) + 10;
     mouseUtils.click({ x: TOP_LEFT_X + x, y: TOP_LEFT_Y + y }, numberOfClicks);
   },
   SCROLL_DOWN: async ({ x, y }) => {
